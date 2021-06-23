@@ -1,0 +1,36 @@
+# Bu iş akışı, düğüm bağımlılıklarının temiz bir kurulumunu yapacak ve farklı ortamlarda farklı düğüm sürümleri arasında testler yapacak
+# Daha fazla bilgi için bkz.: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+isim : ci
+üzerinde :
+  itin :
+    dallar :
+      - usta
+      - geliştirmek
+  pull_request :
+    dallar :
+      - usta
+      - geliştirmek
+işler :
+  test :
+    name : Test - ${{ matrix.platform }} - Node v${{ matrix.node-version }}
+    strateji :
+      matris :
+        düğüm sürümü : [10.x, 12.x, 14.x]
+        platform : [ubuntu-en yeni, windows-en son]
+    çalışır durumda : ${{ matrix.platform }}
+    adımlar :
+      - şunu kullanır : eylemler/checkout@v2
+
+      - ad : Node.js ${{ matrix.node-version }} kullanın
+        kullanır : eylemler/kurulum-düğüm@v1
+        ile :
+          düğüm sürümü : ${{ matrix.node sürümü }}
+
+      - isim : Bağımlılıkları yükle
+        çalıştırın : npm ci
+
+      - ad : Testleri çalıştırın
+        çalıştır : npm testi
+        ortam :
+          CI : doğru
